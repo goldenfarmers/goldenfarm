@@ -1,0 +1,42 @@
+{
+  "name": "goldenfarm-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reserve GoldenFarm from your AI agent with a Binance Agentic Wallet: a skill, a CLI and an MCP server",
+  "keywords": [
+    "goldenfarm",
+    "bnb-chain",
+    "binance",
+    "agentic-wallet",
+    "mcp",
+    "skill"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goldenfarmers/goldenfarm.git"
+  },
+  "homepage": "https://github.com/goldenfarmers/goldenfarm#readme",
+  "bugs": {
+    "url": "https://github.com/goldenfarmers/goldenfarm/issues"
+  },
+  "bin": {
+    "goldenfarm-agent": "bin/goldenfarm-agent.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills"
+  ],
+  "scripts": {
+    "mcp": "node src/mcp.mjs"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "3.25.76"
+  }
+}
