@@ -3,11 +3,14 @@ import { pathToFileURL } from 'node:url'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod'
+import { cardBuy, cardPreview, cardStatus } from '../skills/goldenfarm/scripts/card.mjs'
 import { checkWallet, errorPayload, relay, reserveConfirm, reservePreview, reservationStatus, stats } from '../skills/goldenfarm/scripts/lib.mjs'
 
 const INSTRUCTIONS = `GoldenFarm (淘金农场) is an on-chain farm game on BNB Chain. These tools reserve it with the user's Binance Agentic Wallet.
 To reserve: call goldenfarm_reserve_preview, show the user the statement, inviter, wallet and any risks, and say it is free (no gas,
 no transfer, no approval). Only after the user explicitly says yes, call goldenfarm_reserve_confirm with the requestId.
+To buy Genesis Cards: call goldenfarm_card_preview, show the quantity, total BNB, the card contract, the paying wallet, the
+expected card numbers and any risks. It spends real BNB: only after the user explicitly says yes, call goldenfarm_card_buy.
 On ok:false, tell the user the hint in their language; for baw_error show the message exactly as returned.`
 
 const text = (value) => ({ content: [{ type: 'text', text: JSON.stringify(value, null, 2) }] })
@@ -23,7 +26,7 @@ function tool(fn) {
 }
 
 export function localMcp() {
-  const server = new McpServer({ name: 'goldenfarm', version: '0.1.0' }, { instructions: INSTRUCTIONS })
+  const server = new McpServer({ name: 'goldenfarm', version: '0.1.2' }, { instructions: INSTRUCTIONS })
   const readOnly = { readOnlyHint: true, openWorldHint: true }
 
   server.registerTool(
@@ -81,6 +84,47 @@ export function localMcp() {
       annotations: readOnly,
     },
     tool((args) => reservationStatus(args)),
+  )
+
+  server.registerTool(
+    'goldenfarm_card_preview',
+    {
+      title: 'Buy Genesis Cards: preview',
+      description:
+        'Step 1 of buying GoldenFarm Genesis Cards (0.01 BNB each, max 10 per wallet). Checks the sale and the wallet and asks the Binance Agentic Wallet to preview the purchase. Nothing is paid. Show the user the amount, contract and expected card numbers, and ask for an explicit yes before step 2.',
+      inputSchema: {
+        quantity: z.number().int().min(1).max(10).optional().describe('How many cards, 1 to 10; default 1'),
+      },
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    },
+    tool(({ quantity }) => cardPreview({ quantity: quantity ?? 1 })),
+  )
+
+  server.registerTool(
+    'goldenfarm_card_buy',
+    {
+      title: 'Buy Genesis Cards: pay',
+      description:
+        'Step 2 of buying Genesis Cards. Spends BNB. Only call after the user explicitly confirmed this preview in this conversation. May wait up to 2 minutes for approval in the Binance App; on card_pending, call again after the user approves. Never pays twice for one preview.',
+      inputSchema: {
+        requestId: z.string().describe('requestId returned by goldenfarm_card_preview'),
+      },
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
+    },
+    tool(({ requestId }) => cardBuy({ requestId })),
+  )
+
+  server.registerTool(
+    'goldenfarm_card_status',
+    {
+      title: 'Genesis Card sale',
+      description: "The Genesis Card sale (open or not, sold, price) and how many cards a wallet bought and can still buy. Without arguments, checks the user's own Agentic Wallet.",
+      inputSchema: {
+        wallet: z.string().optional().describe('BSC wallet address, 0x…'),
+      },
+      annotations: readOnly,
+    },
+    tool(({ wallet }) => cardStatus({ wallet })),
   )
 
   server.registerTool(

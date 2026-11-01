@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { pathToFileURL } from 'node:url'
+import { cardBuy, cardPreview, cardStatus } from './card.mjs'
 import { checkWallet, errorPayload, relay, reserveConfirm, reservePreview, reservationStatus, stats } from './lib.mjs'
 
 function parseArgs(argv) {
@@ -40,8 +41,15 @@ export async function run(argv) {
       })
     case 'stats':
       return stats()
+    case 'card-preview':
+      return cardPreview({ quantity: flags.quantity === undefined ? 1 : Number(flags.quantity) })
+    case 'card-buy':
+      if (typeof flags.requestId !== 'string') throw Object.assign(new Error('--request-id is required'), { code: 'bad_args' })
+      return cardBuy({ requestId: flags.requestId })
+    case 'card-status':
+      return cardStatus({ wallet: typeof flags.wallet === 'string' ? flags.wallet : undefined })
     default:
-      throw Object.assign(new Error(`unknown command: ${command ?? ''}. Use check | preview | confirm | status | stats`), { code: 'bad_args' })
+      throw Object.assign(new Error(`unknown command: ${command ?? ''}. Use check | preview | confirm | status | stats | card-preview | card-buy | card-status`), { code: 'bad_args' })
   }
 }
 

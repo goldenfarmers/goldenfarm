@@ -4,7 +4,7 @@ GoldenFarm is a farm game on BNB Chain: plant, harvest, fight off drought, pests
 level. It hasn't launched yet. Reserve now and claim the Early Bird Scarecrow (+1% harvest) when it opens.
 
 Let your AI reserve for you and you're an AI farmer, with the AI edition scarecrow. Bring 5 AI farmers and get a Genesis Card,
-for the first 1,000 players.
+for the first 1,000 players. Or let your AI buy one: 0.01 BNB, Harvest +5%, 10 days only.
 
 This package lets your agent do it with your Binance Agentic Wallet. Reserving is free: no gas, no transfer, no approval.
 
@@ -33,9 +33,12 @@ MCP, for Claude Desktop, Cursor and the like:
 > Reserve GoldenFarm for me
 >
 > Reserve GoldenFarm for me, inviter lucky.ai
+>
+> Buy a GoldenFarm Genesis Card for me
 
-Your agent shows you what it's about to sign and waits for your OK. It only signs one line, `Reserve GoldenFarm · 预约淘金农场`,
-plus the inviter's address. It never touches keys or funds.
+Your agent shows you what it's about to sign or pay and waits for your OK. A reservation signs one line,
+`Reserve GoldenFarm · 预约淘金农场`, plus the inviter's address. A card purchase pays the exact BNB you confirmed to the Genesis
+Card contract and nothing else. It never touches keys.
 
 Step names (never addresses) are reported so we can see where people get stuck; `GOLDENFARM_NO_STATS=1` turns that off.
 Commands are listed in [SKILL.md](skills/goldenfarm/SKILL.md). MIT license.

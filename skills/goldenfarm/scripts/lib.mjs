@@ -47,6 +47,26 @@ export const HINTS = {
   expired: { zh: '签名请求过期了，重新预览一次。', en: 'The signature request expired. Run the preview again.' },
   unknown_request: { zh: '找不到这次预览，重新预览一次。', en: 'This preview was not found. Run the preview again.' },
   relay_unreachable: { zh: '连不上淘金农场的预约服务，稍后再试。', en: 'Cannot reach the GoldenFarm reservation service. Try again later.' },
+  bad_quantity: { zh: '一次买 1 到 10 张。', en: 'Buy 1 to 10 cards at a time.' },
+  wallet_limit: {
+    zh: '每个钱包最多买 10 张，这个钱包剩下的名额不够这么多张。',
+    en: 'Each wallet can buy at most 10 cards, and this wallet does not have that many left.',
+  },
+  sold_out: { zh: '创世卡已经卖完了。', en: 'Genesis Cards are sold out.' },
+  low_balance: {
+    zh: 'Agentic Wallet 里的 BNB 不够付卡钱和手续费。先往这个钱包转一些 BSC 上的 BNB。',
+    en: 'The Agentic Wallet does not have enough BNB for the cards and gas. Send some BNB on BSC to this wallet first.',
+  },
+  risk_blocked: {
+    zh: '币安的风险检查拦下了这笔交易，没有扣钱。',
+    en: "Binance's risk check blocked this transaction. Nothing was charged.",
+  },
+  card_pending: {
+    zh: '交易在等币安 App 里的批准，或者还没上链。批准后让 AI 再跑一次同样的购买命令，或者查一下 card-status。',
+    en: 'The transaction is waiting for approval in the Binance App or is not on chain yet. After approving, run the same buy command again or check card-status.',
+  },
+  buy_failed: { zh: '交易没有成功，没有买到卡。', en: 'The transaction failed. No card was bought.' },
+  rpc_unreachable: { zh: '连不上 BSC 节点，稍后再试。', en: 'Cannot reach the BSC node. Try again later.' },
 }
 
 export class GfError extends Error {
@@ -200,15 +220,19 @@ export function signRequest(wallet, typed) {
 
 const statePath = (id) => join(STATE_DIR, `${String(id).replace(/[^\w.-]/g, '_')}.json`)
 
-function saveState(id, value) {
+export function saveState(id, value) {
   mkdirSync(STATE_DIR, { recursive: true })
   writeFileSync(statePath(id), JSON.stringify(value))
 }
 
-function loadState(id) {
+export function loadState(id) {
   const p = statePath(id)
   if (!existsSync(p)) throw new GfError('unknown_request', HINTS.unknown_request.en)
   return JSON.parse(readFileSync(p, 'utf8'))
+}
+
+export function removeState(id) {
+  rmSync(statePath(id), { force: true })
 }
 
 export async function reservationStatus({ wallet, number, name } = {}) {
@@ -275,7 +299,7 @@ export async function reservePreview({ inviter } = {}) {
   }
 }
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+export const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 export async function reserveConfirm({ requestId }) {
   const state = loadState(requestId)
