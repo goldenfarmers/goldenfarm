@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-export const RELAY = (process.env.GOLDENFARM_RELAY || 'http://localhost:8787').replace(/\/$/, '')
+export const RELAY = (process.env.GOLDENFARM_RELAY || 'https://goldenfarm.fun').replace(/\/$/, '')
 const BSC = '56'
 const ZERO = '0x0000000000000000000000000000000000000000'
 const STATE_DIR = process.env.GOLDENFARM_STATE_DIR || join(tmpdir(), 'goldenfarm')

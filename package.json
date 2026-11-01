@@ -1,6 +1,6 @@
 {
   "name": "goldenfarm-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Reserve GoldenFarm from your AI agent with a Binance Agentic Wallet: a skill, a CLI and an MCP server",
   "keywords": [
