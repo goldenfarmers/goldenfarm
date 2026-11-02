@@ -3,7 +3,7 @@
 GoldenFarm is a farm game on BNB Chain: plant, harvest, fight off drought, pests and weeds, and build your farm up level by
 level. It hasn't launched yet. Reserve now and claim the Early Bird Scarecrow (+1% harvest) when it opens.
 
-Let your AI reserve for you and you're an AI farmer, with the AI edition scarecrow. Bring 5 AI farmers and get a Genesis Card,
+Let your AI reserve for you and you're an AI farmer, with the AI edition scarecrow. Bring 3 AI farmers and get a Genesis Card,
 for the first 1,000 players. Or let your AI buy one: 0.01 BNB, Harvest +5%, 10 days only.
 
 This package lets your agent do it with your Binance Agentic Wallet. Reserving is free: no gas, no transfer, no approval.

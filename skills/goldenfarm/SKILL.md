@@ -7,7 +7,7 @@ description: |
   (5 AI farmers = 1 Genesis Card), how many people reserved or how many cards they bought.
 metadata:
   author: goldenfarmers
-  version: '0.1.2'
+  version: '0.1.3'
   openclaw:
     requires:
       bins:
@@ -109,7 +109,7 @@ node <this skill's folder>/scripts/goldenfarm.mjs status --wallet 0x…
 ```
 
 `invite.valid` is friends who reserved through an AI. `invite.others` is friends who reserved with a wallet on the website: they
-stay linked as referrals but don't count toward the card. `invite.card` shows up once 5 AI farmers are in; the card is locked and
+stay linked as referrals but don't count toward the card. `invite.card` shows up once `invite.goal` AI farmers are in; the card is locked and
 claimed after launch.
 
 `stats` prints the totals, the latest reservations and the invite leaderboard.
@@ -161,14 +161,14 @@ Use the user's language. Keep it short.
 中文：
 
 > 预约成功！你是第 {number} 位 AI 农场主，开服后领 AI 限定款稻草人（收获 +1%）。
-> 邀请 5 位 AI 农场主送 1 张创世卡：已邀请 {invite.valid}/5，还剩 {invite.cardsLeft} 张。
+> 邀请 {invite.goal} 位 AI 农场主送 1 张创世卡：已邀请 {invite.valid}/{invite.goal}，还剩 {invite.cardsLeft} 张。
 > 想晒一下，这段可以直接发 X：{share.zh}
 
 English:
 
 > Reserved! You're AI Farmer #{number}. Claim your AI edition scarecrow (+1% harvest) after launch.
-> Bring 5 AI farmers for a Genesis Card: {invite.valid}/5 so far, {invite.cardsLeft} cards left.
+> Bring {invite.goal} AI farmers for a Genesis Card: {invite.valid}/{invite.goal} so far, {invite.cardsLeft} cards left.
 > To share it, post this on X: {share.en}
 
-`lockedNow` in the result means this reservation was the inviter's 5th AI farmer and locked them a Genesis Card. Nothing changes
+`lockedNow` in the result means this reservation was the AI farmer that reached the inviter's `invite.goal` and locked them a Genesis Card. Nothing changes
 for the user; you can mention it.

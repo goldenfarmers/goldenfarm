@@ -26,7 +26,7 @@ function tool(fn) {
 }
 
 export function localMcp() {
-  const server = new McpServer({ name: 'goldenfarm', version: '0.1.2' }, { instructions: INSTRUCTIONS })
+  const server = new McpServer({ name: 'goldenfarm', version: '0.1.3' }, { instructions: INSTRUCTIONS })
   const readOnly = { readOnlyHint: true, openWorldHint: true }
 
   server.registerTool(
@@ -75,7 +75,7 @@ export function localMcp() {
     {
       title: 'Reservation status',
       description:
-        "A GoldenFarm reservation and its invite progress (5 AI farmers = 1 Genesis Card). Without arguments, checks the user's own Agentic Wallet.",
+        "A GoldenFarm reservation and its invite progress toward a free Genesis Card. Without arguments, checks the user's own Agentic Wallet.",
       inputSchema: {
         wallet: z.string().optional().describe('BSC wallet address, 0x…'),
         number: z.number().int().positive().optional().describe('Reservation number'),
