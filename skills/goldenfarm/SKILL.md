@@ -4,7 +4,7 @@ description: |
   Reserve GoldenFarm (淘金农场), an AI farm game on BNB Chain, and buy its Genesis Cards with the user's Binance Agentic Wallet.
   Use when the user says "帮我预约淘金农场", "Reserve GoldenFarm for me", "预约淘金农场，邀请人 …", "帮我买淘金农场创世卡" or
   "Buy a GoldenFarm Genesis Card", or asks whether they reserved, their reservation number, their invite progress
-  (5 AI farmers = 1 Genesis Card), how many people reserved or how many cards they bought.
+  (3 AI farmers = 1 Genesis Card), how many people reserved or how many cards they bought.
 metadata:
   author: goldenfarmers
   version: '0.1.3'
@@ -18,7 +18,7 @@ metadata:
 
 GoldenFarm is a farm game on BNB Chain. Reserving before launch is free, and every reserved farm gets the Early Bird Scarecrow
 (a yard decoration, +1% harvest, claimed after launch). A reservation signed by an Agentic Wallet that holds an Agent ID counts
-as an AI farmer and gets the AI edition. Bring 5 AI farmers and get a Genesis Card, for the first 1,000 players.
+as an AI farmer and gets the AI edition. Bring 3 AI farmers and get a Genesis Card, for the first 1,000 players.
 
 Everything goes through the script in this folder:
 
